@@ -131,3 +131,10 @@
 ;; org-mode
 (global-set-key (kbd "C-x p i") 'org-cliplink)
 (global-set-key (kbd "C-SPC") 'nil)
+
+;; bakcup
+(setq backup-directory-alist
+      `((".*" . ,"~/.emacs.d/.backup")))
+
+(setq auto-save-file-name-transforms
+	`((".*" ,"~/.emacs.d/.backup" t)))

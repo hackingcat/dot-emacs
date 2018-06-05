@@ -17,6 +17,6 @@
 (depends-on "autopair")
 (depends-on "helm-ag")
 (depends-on "helm-swoop")
-(depends-on "helm-org-rifle")
+(depends-on "helm-o; rg-rifle")
 (depends-on "org")
 (depends-on "org-cliplink")
