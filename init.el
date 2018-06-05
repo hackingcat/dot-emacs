@@ -1,13 +1,14 @@
 (require 'cask "~/.cask/cask.el")
 (cask-initialize)
 
+
 ;;appearance
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 
 ;; set font size
-(set-face-attribute 'default nil :height 140)
+(set-face-attribute 'default nil :height 135)
 ; theme settings
 ;; Global settings (defaults)
 (load-theme 'doom-one t)
@@ -29,9 +30,6 @@
 
 
 
-
-;;autocomplete
-(add-hook 'after-init-hook 'global-company-mode)
 
 ;;vim
 ;;evil
@@ -64,8 +62,11 @@
   "or" 'helm-org-rifle
   "fei" (lambda () (interactive) (find-file "~/.emacs.d/init.el"))
   "fec" (lambda () (interactive) (find-file "~/.emacs.d/Cask"))
+  "<SPC>" 'helm-M-x
+  "df" 'delete-file-and-buffer
   )
-(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+(define-key evil-visual-state-map (kbd "ESC ESC") (kbd "C-g"))
+(define-key evil-normal-state-map (kbd "ESC ESC") (kbd "C-g"))
 (define-key evil-insert-state-map (kbd "C-v") 'x-clipboard-yank)
 ;; evil-surround
 (global-evil-surround-mode 1)
@@ -75,13 +76,16 @@
 (dired-async-mode 1)
 (async-bytecomp-package-mode 1)
 
-(custom-set-variables
- '(helm-follow-mode-persistent t))
 (setq helm-follow-mode-persistent nil)
+(helm-mode 1)
+(setq helm-recentf-fuzzy-match 1)
+(setq helm-buffers-fuzzy-matching 1)
+(setq helm-completion-in-region-fuzzy-match 1)
+(setq helm-M-x-fuzzy-match 1)
 (global-set-key (kbd "M-x") #'helm-M-x)
 (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
 (global-set-key (kbd "C-x C-f") #'helm-find-files)
-(helm-mode 1)
+
 
 ;; helm-swoop
 ;; Change the keybinds to whatever you like :)
@@ -93,12 +97,12 @@
 (setq helm-swoop-pre-input-function
       (lambda () ""))
 (setq helm-swoop-use-fuzzy-match t)
+(global-set-key (kbd "M-d") #'helm-describe-modes)
+
 ;;others
 
 ;;turn down voice
 (setq visible-bell t)
-
-
 ;;Auto-save
 (defun full-auto-save ()
   (interactive)
@@ -108,11 +112,11 @@
       (if (and (buffer-file-name) (buffer-modified-p))
           (basic-save-buffer)))))
 (add-hook 'auto-save-hook 'full-auto-save)
-(defun save-all ()
-(interactive)
-(save-some-buffers t))
 
-(add-hook 'focus-out-hook 'save-all)
+;; super-save
+(super-save-mode +1)
+(setq super-save-auto-save-when-idle t)
+
 ;;restart
 (setq restart-emacs-restore-frames t)
 
@@ -138,3 +142,51 @@
 
 (setq auto-save-file-name-transforms
 	`((".*" ,"~/.emacs.d/.backup" t)))
+
+
+(global-set-key (kbd "M-d") #'helm-describe-modes)
+
+;; self-function
+(defun delete-file-and-buffer ()
+  "Kill the current buffer and deletes the file it is visiting."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (when filename
+      (if (vc-backend filename)
+          (vc-delete-file filename)
+        (progn
+          (delete-file filename)
+          (message "Deleted file %s" filename)
+          (kill-buffer))))))
+
+;;autocomplete
+(add-hook 'after-init-hook 'global-company-mode)
+(setq company-minimum-prefix-length 2)
+
+;; yasnippet
+(yas-global-mode 1)
+(yas-reload-all)
+(add-hook 'python-mode-hook #'yas-minor-mode)
+
+(defun company-yasnippet-or-completion ()
+  "Solve company yasnippet conflicts."
+  (interactive)
+  (let ((yas-fallback-behavior
+         (apply 'company-complete-common nil)))
+    (yas-expand)))
+
+(add-hook 'company-mode-hook
+          (lambda ()
+            (substitute-key-definition
+             'company-complete-common
+             'company-yasnippet-or-completion
+             company-active-map)))
+;; flycheck
+(global-flycheck-mode)
+;; python
+
+;; langs
+;; python
+;; elpy
+
+(elpy-enable)
