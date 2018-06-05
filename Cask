@@ -16,4 +16,7 @@
 (depends-on "iedit")
 (depends-on "autopair")
 (depends-on "helm-ag")
+(depends-on "helm-swoop")
+(depends-on "helm-org-rifle")
 (depends-on "org")
+(depends-on "org-cliplink")

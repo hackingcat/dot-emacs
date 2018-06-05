@@ -60,6 +60,8 @@
   "w2" 'split-window-horizontally
   "wv" 'split-window-horizontally
   "s/" 'helm-do-ag-this-file
+  "ss" 'helm-swoop
+  "or" 'helm-org-rifle
   "fei" (lambda () (interactive) (find-file "~/.emacs.d/init.el"))
   "fec" (lambda () (interactive) (find-file "~/.emacs.d/Cask"))
   )
@@ -81,6 +83,16 @@
 (global-set-key (kbd "C-x C-f") #'helm-find-files)
 (helm-mode 1)
 
+;; helm-swoop
+;; Change the keybinds to whatever you like :)
+(global-set-key (kbd "M-i") 'helm-swoop)
+(global-set-key (kbd "M-I") 'helm-swoop-back-to-last-point)
+(global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
+(global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
+;; Disable pre-input
+(setq helm-swoop-pre-input-function
+      (lambda () ""))
+(setq helm-swoop-use-fuzzy-match t)
 ;;others
 
 ;;turn down voice
@@ -115,3 +127,7 @@
 (autopair-global-mode) ;; enable autopair in all buffers
 ;; remember cursor position, for emacs 25.1 or later
 (save-place-mode 1)
+
+;; org-mode
+(global-set-key (kbd "C-x p i") 'org-cliplink)
+(global-set-key (kbd "C-SPC") 'nil)
