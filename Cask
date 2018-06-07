@@ -31,3 +31,10 @@
 (depends-on "py-yapf")
 (depends-on "flycheck")
 (depends-on "quickrun")
+(depends-on "lsp-mode")
+(depends-on "lsp-python")
+(depends-on "lsp-ui")
+(depends-on "company-lsp")
+(depends-on "highlight-indentation")
+(depends-on "neotree")
+

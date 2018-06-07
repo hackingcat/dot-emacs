@@ -37,6 +37,7 @@
   "el" 'flycheck-list-errors
   "en" 'flycheck-next-error
   "ep" 'flycheck-previous-error
+  "hi" 'helm-imenu
   )
 ;; escape
 (define-key evil-normal-state-map [escape] 'keyboard-quit)
@@ -49,6 +50,7 @@
 (define-key evil-visual-state-map (kbd "ESC ESC") (kbd "C-g"))
 (define-key evil-normal-state-map (kbd "ESC ESC") (kbd "C-g"))
 (define-key evil-normal-state-map (kbd "Q") 'delete-window)
+(define-key evil-normal-state-map (kbd "gd") 'xref-find-definitions)
 (define-key evil-visual-state-map (kbd "Q") 'delete-windows)
 (define-key evil-insert-state-map (kbd "C-v") 'x-clipboard-yank)
 ;; evil-surround
