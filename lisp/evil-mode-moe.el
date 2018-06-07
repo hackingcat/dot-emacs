@@ -23,7 +23,7 @@
   "<left>" 'windmove-left
   "<right>" 'windmove-right
   "wd" 'delete-window
-  "sw" 'split-window-below
+  "ws" 'split-window-below
   "w2" 'split-window-horizontally
   "wv" 'split-window-horizontally
   "s/" 'helm-do-ag-this-file
@@ -38,6 +38,7 @@
   "en" 'flycheck-next-error
   "ep" 'flycheck-previous-error
   "hi" 'helm-imenu
+  "rn" 'rename-file-and-buffer
   )
 ;; escape
 (define-key evil-normal-state-map [escape] 'keyboard-quit)
@@ -57,5 +58,54 @@
 (global-evil-surround-mode 1)
 ;; evil-visualstar
 (global-evil-visualstar-mode)
+
+;; evil-quickscope
+(global-evil-quickscope-mode 1)
+;; evil
+(define-key evil-normal-state-map (kbd "S-<left>")
+  (lambda ()
+    (interactive)
+    (evil-visual-char)
+    (backward-char)))
+(define-key evil-normal-state-map (kbd "S-<right>") 
+  (lambda ()
+    (interactive)
+    (evil-visual-char)
+    (forward-char)))
+(define-key evil-visual-state-map (kbd "S-<left>")
+
+  #'backward-char)
+(define-key evil-visual-state-map (kbd "S-<right>") 
+  #'forward-char)
+
+(defun evil-unimpaired/paste-below ()
+  (interactive)
+  (evil-insert-newline-below)
+  (evil-paste-after 1))
+
+(defun evil-unimpaired/paste-above ()
+  (interactive)
+  (evil-insert-newline-above)
+  (evil-paste-after 1))
+
+(define-key evil-normal-state-map (kbd "[ p") 'evil-unimpaired/paste-above)
+(define-key evil-normal-state-map (kbd "] p") 'evil-unimpaired/paste-below)
+
+(defun evil-unimpaired/insert-space-above (count)
+  (interactive "p")
+  (dotimes (_ count) (save-excursion (evil-insert-newline-above))))
+
+(defun evil-unimpaired/insert-space-below (count)
+  (interactive "p")
+  (dotimes (_ count) (save-excursion (evil-insert-newline-below))))
+
+(define-key evil-normal-state-map (kbd "[ SPC")
+  'evil-unimpaired/insert-space-above)
+(define-key evil-normal-state-map (kbd "] SPC")
+  'evil-unimpaired/insert-space-below)
+
+
+
+
 
 (provide 'evil-mode-moe)

@@ -11,7 +11,7 @@
 (load-theme 'doom-one t)
 (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
       doom-themes-enable-italic t) ; if nil, italics is universally disabled
-
+(remove-hook 'doom-init-ui-hook #'blink-cursor-mode)
 (doom-themes-org-config)
 
 ;; ; moe
@@ -27,7 +27,7 @@
 ;; ;; Choose a color for mode-line.(Default: blue)
 ;; (moe-theme-set-color 'cyan)
 
-; (load-theme 'moe-dark t)
+;; (load-theme 'moe-dark t)
 
 
 ; dashboard
@@ -41,5 +41,9 @@
                         (registers . 5)))
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
+;; hlinum
+(require 'hlinum)
+(hlinum-activate)
+(add-hook 'after-init-hook 'linum-mode)
 
 (provide 'appearance-moe)

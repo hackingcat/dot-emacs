@@ -51,4 +51,47 @@
           (kill-buffer))))))
 
 
+;; highlight-indentation
+(require 'highlight-indentation)
+(set-face-background 'highlight-indentation-face "#e3e3d3")
+(set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
+;; neotree
+(require 'neotree)
+(global-set-key [f2] 'neotree-toggle)
+
+
+;; soft-link
+(setq vc-follow-symlinks t)
+
+;; rainbow-delimiters-mode
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
+(defun rename-file-and-buffer ()
+  "Rename the current buffer and file it is visiting."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (message "Buffer is not visiting a file!")
+      (let ((new-name (read-file-name "New name: " filename)))
+        (cond
+         ((vc-backend filename) (vc-rename-file filename new-name))
+         (t
+          (rename-file filename new-name t)
+          (set-visited-file-name new-name t t)))))))
+
+
+
+;; undo-tree
+
+(global-undo-tree-mode)
+(defun undo-tree-split-side-by-side (original-function &rest args)
+  "Split undo-tree side-by-side"
+  (let ((split-height-threshold nil)
+        (split-width-threshold 0))
+    (apply original-function args)))
+
+(advice-add 'undo-tree-visualize :around #'undo-tree-split-side-by-side)
+
 (provide 'better-default-moe)
+
+

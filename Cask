@@ -37,4 +37,12 @@
 (depends-on "company-lsp")
 (depends-on "highlight-indentation")
 (depends-on "neotree")
+(depends-on "rainbow-delimiters")
+(depends-on "evil-quickscope")
+(depends-on "hungry-delete")
+(depends-on "expand-region")
+(depends-on "undo-tree")
+(depends-on "zeal-at-point")
+(depends-on "google-this")
+(depends-on "hlinum")
 
