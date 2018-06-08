@@ -34,9 +34,6 @@
   "fec" (lambda () (interactive) (find-file "~/.emacs.d/Cask"))
   "<SPC>" 'helm-M-x
   "df" 'delete-file-and-buffer
-  "el" 'flycheck-list-errors
-  "en" 'flycheck-next-error
-  "ep" 'flycheck-previous-error
   "hi" 'helm-imenu
   "rn" 'rename-file-and-buffer
   )

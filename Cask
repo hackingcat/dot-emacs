@@ -45,4 +45,8 @@
 (depends-on "zeal-at-point")
 (depends-on "google-this")
 (depends-on "hlinum")
+(depends-on "insert-shebang")
+(depends-on "dash")
+(depends-on "helm-flycheck")
+(depends-on "flycheck-pos-tip")
 

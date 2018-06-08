@@ -57,7 +57,11 @@
 (set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
 ;; neotree
 (require 'neotree)
-(global-set-key [f2] 'neotree-toggle)
+(global-set-key [f4] 'neotree-toggle)
+(evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
+(evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+(evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
 
 
 ;; soft-link
@@ -91,6 +95,15 @@
     (apply original-function args)))
 
 (advice-add 'undo-tree-visualize :around #'undo-tree-split-side-by-side)
+(define-key key-translation-map (kbd "<f2>") (kbd "C-x u"))
+
+
+(evil-leader/set-key
+  "ft" 'neotree-toggle
+  )
+
+
+
 
 (provide 'better-default-moe)
 
